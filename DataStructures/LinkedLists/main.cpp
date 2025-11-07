@@ -72,6 +72,74 @@ class LinkedList{
             }
             cout << endl;
         }
+
+        void removeFirst(){
+            if(header != nullptr){
+                Node* temp = header;
+                header = header->next;
+                delete temp;
+                size--;
+            }
+        }
+
+        void removeLast(){
+            if(header->next == nullptr){
+                removeFirst();
+            }
+            else if(header != nullptr){
+                Node* curr = header;
+                Node* prev = nullptr;
+                while(curr->next != nullptr){
+                    prev = curr;
+                    curr = curr->next;
+                }
+                tail = prev;
+                prev->next = nullptr;
+                delete curr;
+                size--;
+            }
+        }
+
+        void removeAt(int pos){
+            if(pos > size || pos < 1)
+                return;
+            else if(pos == 1)
+                removeFirst();
+            else if(pos == size)
+                removeLast();
+            else if (header != nullptr){
+                Node* prev = nullptr;
+                Node* curr = header;
+                for(int i=1; i<pos; i++){
+                    prev = curr;
+                    curr = curr->next;
+                }
+                prev->next=curr->next;
+                delete curr;
+                size--;
+            }
+        }
+
+        void insertAt(int pos, int data){
+            if(pos > size+1 || pos < 1)
+                return;
+            else if(pos == 1)
+                prepend(data);
+            else if(pos == size+1)
+                append(data);
+            else if(header != nullptr){
+                Node* n = new Node(data);
+                Node* prev = nullptr;
+                Node* curr = header;
+                for(int i=1;i<pos;i++){
+                    prev = curr;
+                    curr = curr->next;
+                }
+                prev->next = n;
+                n->next = curr;
+                size++;
+            } 
+        }
 };
 
 int main()
@@ -80,6 +148,7 @@ int main()
     list.append(1);
     list.append(2);
     list.append(3);
-    list.prepend(4);
+    list.toString();
+    list.insertAt(2,5);
     list.toString();
 }
