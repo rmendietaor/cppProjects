@@ -24,6 +24,15 @@ class LinkedList{
             size = 0;
         };
 
+        ~LinkedList(){
+            Node* next = nullptr;
+            while (header != nullptr){
+                next = header->next;
+                delete header;
+                header = next;
+            }
+        }
+
         int getSize(){
             return size;
         }
